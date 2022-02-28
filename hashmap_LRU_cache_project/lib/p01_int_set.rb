@@ -1,14 +1,25 @@
 class MaxIntSet
+  BOUNDARY_ERROR = "Out of bounds"
+
+  attr_reader :store
+
   def initialize(max)
+    @store = Array.new(max, false)
   end
 
   def insert(num)
+    raise BOUNDARY_ERROR if (num < 0 || num >= @store.length)
+    @store[num] = true
   end
 
   def remove(num)
+    raise BOUNDARY_ERROR if (num < 0 || num >= @store.length)
+    @store[num] = false
   end
 
   def include?(num)
+    raise BOUNDARY_ERROR if (num < 0 || num >= @store.length)
+    @store[num] == true
   end
 
   private
