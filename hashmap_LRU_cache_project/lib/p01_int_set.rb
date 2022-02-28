@@ -8,23 +8,24 @@ class MaxIntSet
   end
 
   def insert(num)
-    raise BOUNDARY_ERROR if (num < 0 || num >= @store.length)
+    raise BOUNDARY_ERROR unless is_valid?(num)
     @store[num] = true
   end
 
   def remove(num)
-    raise BOUNDARY_ERROR if (num < 0 || num >= @store.length)
+    raise BOUNDARY_ERROR unless is_valid?(num)
     @store[num] = false
   end
 
   def include?(num)
-    raise BOUNDARY_ERROR if (num < 0 || num >= @store.length)
+    raise BOUNDARY_ERROR unless is_valid?(num)
     @store[num] == true
   end
 
   private
 
   def is_valid?(num)
+    !(num < 0 || num >= @store.length)
   end
 
   def validate!(num)
@@ -38,18 +39,25 @@ class IntSet
   end
 
   def insert(num)
+    self[num] << num
   end
 
   def remove(num)
+    if self.include?(num)
+      self[num].delete(num)
+    end
   end
 
   def include?(num)
+    self[num].include?(num)
   end
 
   private
 
   def [](num)
     # optional but useful; return the bucket corresponding to `num`
+    idx = num % @store.size
+    @store[idx]
   end
 
   def num_buckets
