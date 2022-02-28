@@ -84,6 +84,7 @@ include Enumerable
     new_node.prev = last
     last.next = new_node
     tail.prev = new_node
+    new_node
   end
 
   def update(key, val)
@@ -103,7 +104,7 @@ include Enumerable
     while current_node != tail 
       if current_node.key == key 
         current_node.remove
-        break
+        return current_node
       end 
       current_node = current_node.next
     end
